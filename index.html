@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="display"></div>
+        <div class="body">
+            <div class="button clear" onclick="clearDisplay()">C</div>
+            <div class="button negate" onclick="negate()">+/-</div>
+            <div class="button percentage" onclick="appendToDisplay('%')">%</div>
+            <div class="button operators divide" onclick="appendToDisplay('/')">&divide;</div>
+            <div class="button seven number" onclick="appendToDisplay('7')">7</div>
+            <div class="button eight number" onclick="appendToDisplay('8')">8</div>
+            <div class="button nine number" onclick="appendToDisplay('9')">9</div>
+            <div class="button operators multiply" onclick="appendToDisplay('*')">&cross;</div>
+            <div class="button four number" onclick="appendToDisplay('4')">4</div>
+            <div class="button five number" onclick="appendToDisplay('5')">5</div>
+            <div class="button six number" onclick="appendToDisplay('6')">6</div>
+            <div class="button operators minus" onclick="appendToDisplay('-')">&minus;</div>
+            <div class="button one number" onclick="appendToDisplay('1')">1</div>
+            <div class="button two number" onclick="appendToDisplay('2')">2</div>
+            <div class="button three number" onclick="appendToDisplay('3')">3</div>
+            <div class="button operators plus" onclick="appendToDisplay('+')">&plus;</div>
+            <div class="button zero number" onclick="appendToDisplay('0')">0</div>
+            <div class="button point" onclick="appendToDisplay('.')">.</div>
+            <div class="button operators equals" onclick="calculate()">=</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
