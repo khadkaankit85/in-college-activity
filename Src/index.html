@@ -84,7 +84,7 @@
                     <td>4</td>
                     <td>Test2</td>
                     <td>40</td>
-                    <td>hello world</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
@@ -147,7 +147,15 @@
             }
 
             function addGrade() {
-                const grade = document.getElementById("grade").value;
+                let grade = document.getElementById("grade").value;
+                try {
+                    grade = parseInt(grade)
+                }
+                catch {
+                    ERR.innerText = "Error Message: grade must be a num:)"
+                    return
+
+                }
 
                 const activityNumberBeingEdited = document.getElementById("activityNo").value - 1
 
@@ -155,8 +163,17 @@
                     ERR.innerText = "Error Message:Invalid activity number:)"
                     return
                 }
+                console.log(typeof (grade))
+                if (!grade || grade < 0 || grade > 100) {
+                    ERR.innerText = "Error Message:Invalid grade:)"
+                    return
+                }
                 // const grade=document.getElementById("grade")
                 const rowPreviously = tableBody.children[activityNumberBeingEdited]//gets the children of table we wanna be editing
+                if (!rowPreviously) {
+                    ERR.innerText = "Error Message: No such row existed before"
+                    return;
+                }
 
                 //gets the grade part of that element
                 //   console.log(rowPreviously.lastElementChild)
