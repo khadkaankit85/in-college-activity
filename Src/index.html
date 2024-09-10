@@ -146,16 +146,17 @@
 
 
             function deleteActivity() {
-                const lastChildElement = tableBody.lastChild
+                const lastChildElement = tableBody.lastElementChild
                 if (!lastChildElement) {
                     //set no err msg if there is no more rows to delete
                     ERR.innerText = "Error Message: No more activities to remove"
                     return;
                 }
 
-                tableBody.removeChild(tableBody.lastChild)
+                tableBody.removeChild(lastChildElement)
                 //decrease the counter
                 noActivity--
+                console.log(noActivity)
 
             }
 
