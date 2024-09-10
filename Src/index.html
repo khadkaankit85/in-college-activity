@@ -1,77 +1,147 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
     <style>
-        table,
-        td {
-            border: 1px solid black;
+        table {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular',
+                'Lucida Grande', 'Lucida Sans Unicode',
+                Geneva, Verdana, sans-serif;
+        }
+
+        input,
+        button {
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular',
+                'Lucida Grande', 'Lucida Sans Unicode',
+                Geneva, Verdana, sans-serif;
+            align: center;
         }
     </style>
 </head>
 
 <body>
+    <div align="center">
+        <h1>Grade Calculator</h1>
 
-    <p>Click the buttons to create and delete row(s) for the table.</p>
+        <button onclick="addActivity()" id="addActivity">
+            Add Activity</button>
 
-    <table id="myTable">
-        <tr>
-            <td>Row1 cell1</td>
-            <td>Row1 cell2</td>
-        </tr>
-        <tr>
-            <td>Row2 cell1</td>
-            <td>Row2 cell2</td>
-        </tr>
-        <tr>
-            <td>Row3 cell1</td>
-            <td>Row3 cell2</td>
-        </tr>
-    </table>
-    <br>
-    <p id="warning">
+        <label for="activity">Activity</label>
+        <input type="text" id="Activity" size="3">
 
-    </p>
+        <label for="Weight">Weight</label>
+        <input type="text" id="Weight" size="3"><br>
 
-    <button onclick="myCreateFunction()">Create row</button>
-    <button onclick="myDeleteFunction()">Delete row</button>
+        <button onclick="addGrade()" id="addGrade">
+            Add Grade</button>
 
-    <script>
-        let count = 4
+        <label for="grade">Grade</label>
+        <input type="text" id="grade" size="3"">
 
-        document.addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                myCreateFunction()
+      <label for=" activityNo">Activity no</label>
+        <input type="text" id="activityNo" size="3"><br>
+
+        <button onclick="deleteActivity()" id="deleteActivity">
+            Delete Activity </button>
+
+        <table border="2" id="theTable" style="width:70%">
+            <tr>
+                <th>No</th>
+                <th>Activity</th>
+                <th>Weight</th>
+                <th>Grade</th>
+            </tr>
+            <tbody id="tableBody">
+
+                <tr>
+                    <td>1</td>
+                    <td>Lab1</td>
+                    <td>10</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Lab2</td>
+                    <td>20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Test1</td>
+                    <td>30</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Test2</td>
+                    <td>40</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="ERR" style="color:red;"> </p>
+        <script>
+            let noActivity = 4; //global and should keep the count of no. of rows:)
+
+            let totalWeight = 100;
+            let ERR = document.getElementById("ERR");
+            const tableBody = document.getElementById("tableBody")
+
+
+
+            function addActivity() {
+                ERR.innerText = ""
+                //gets the activity and grade first
+                const activity = document.getElementById("Activity").value;
+                const weight = document.getElementById("Weight").value;
+
+                if (!activity) {
+                    ERR.innerText = "Error Message: Acticity name is rejected"
+                    return;
+                }
+                if (weight < 0 || weight > 100) {
+                    ERR.innerText = "Error Message: Weight is rejected"
+                    return;
+                }
+
+                noActivity++ //increase the counter
+
+
+                const row = document.createElement("tr")
+                row.innerHTML = ` <td>${noActivity}</td>
+                <td>${activity}</td>
+                <td>${weight}</td>
+                <td></td>
+                `
+                tableBody.appendChild(row) //targets the tbody element and appends
+
+                //reset the input fields after successful addition
+                //cant reset from above variables(activity and weight because those are js reference only:)
+                document.getElementById("Activity").value = ""
+                document.getElementById("Weight").value = ""
+
             }
-            if (event.key === "Delete") {
-                myDeleteFunction()
-            }
-        });
-        function myCreateFunction() {
-            var table = document.getElementById("myTable");
-            var row = table.insertRow()
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            cell1.innerHTML = `Row ${count} cell 1`;
-            cell2.innerHTML = `Row ${count} cell 2`;
-            count++
-        }
 
 
-        function myDeleteFunction() {
-            document.getElementById("warning").innerHTML = ""
+            function deleteActivity() {
 
-            try {
-                document.getElementById("myTable").deleteRow(0);
-            }
-            catch {
-                document.getElementById("warning").innerHTML = "Table is empty"
+                //set no err msg if there is no more rows to delete
             }
 
+            function addGrade() {
+                // const grade=document.getElementById("grade")
 
-        }
-    </script>
-
+            }  
+        </script>
 </body>
 
 </html>
