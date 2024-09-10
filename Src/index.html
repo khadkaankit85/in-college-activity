@@ -96,6 +96,16 @@
             let ERR = document.getElementById("ERR");
             const tableBody = document.getElementById("tableBody")
 
+            function resetInputFields() {
+                //resets all the input fields
+
+                document.getElementById("Activity").value = ""
+                document.getElementById("Weight").value = ""
+                document.getElementById("grade").value = ""
+                document.getElementById("activityNo").value = ""
+
+            }
+
 
 
             function addActivity() {
@@ -108,10 +118,14 @@
                     ERR.innerText = "Error Message: Acticity name is rejected"
                     return;
                 }
+
+
                 if (weight < 0 || weight > 100) {
                     ERR.innerText = "Error Message: Weight is rejected"
+                    document.getElementById("Weight").value = ""
                     return;
                 }
+
 
                 noActivity++ //increase the counter
 
@@ -126,8 +140,7 @@
 
                 //reset the input fields after successful addition
                 //cant reset from above variables(activity and weight because those are js reference only:)
-                document.getElementById("Activity").value = ""
-                document.getElementById("Weight").value = ""
+                resetInputFields()
 
             }
 
@@ -171,15 +184,14 @@
                 // const grade=document.getElementById("grade")
                 const rowPreviously = tableBody.children[activityNumberBeingEdited]//gets the children of table we wanna be editing
                 if (!rowPreviously) {
-                    ERR.innerText = "Error Message: No such row existed before"
+                    ERR.innerText = `Error Message: Row number ${activityNumberBeingEdited + 1} doesn't exist`
                     return;
                 }
 
                 //gets the grade part of that element
                 //   console.log(rowPreviously.lastElementChild)
                 rowPreviously.lastElementChild.innerText = grade;
-                document.getElementById("grade").value = ""
-                document.getElementById("activityNo").value = ""
+                resetInputFields()
 
                 //if we are updating smthing then there must be something so lets set the error to empty string
                 ERR.innerText = ""
