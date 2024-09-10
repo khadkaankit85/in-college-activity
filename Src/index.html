@@ -133,8 +133,17 @@
 
 
             function deleteActivity() {
+                const lastChildElement = tableBody.lastChild
+                if (!lastChildElement) {
+                    //set no err msg if there is no more rows to delete
+                    ERR.innerText = "Error Message: No more activities to remove"
+                    return;
+                }
 
-                //set no err msg if there is no more rows to delete
+                tableBody.removeChild(tableBody.lastChild)
+                //decrease the counter
+                noActivity--
+
             }
 
             function addGrade() {
