@@ -84,7 +84,7 @@
                     <td>4</td>
                     <td>Test2</td>
                     <td>40</td>
-                    <td></td>
+                    <td>hello world</td>
                 </tr>
             </tbody>
         </table>
@@ -147,7 +147,29 @@
             }
 
             function addGrade() {
+                const grade = document.getElementById("grade").value;
+
+                const activityNumberBeingEdited = document.getElementById("activityNo").value - 1
+
+                if (!activityNumberBeingEdited) {
+                    ERR.innerText = "Error Message:Invalid activity number:)"
+                    return
+                }
                 // const grade=document.getElementById("grade")
+                const rowPreviously = tableBody.children[activityNumberBeingEdited]//gets the children of table we wanna be editing
+
+                //gets the grade part of that element
+                //   console.log(rowPreviously.lastElementChild)
+                rowPreviously.lastElementChild.innerText = grade;
+                document.getElementById("grade").value = ""
+                document.getElementById("activityNo").value = ""
+
+                //if we are updating smthing then there must be something so lets set the error to empty string
+                ERR.innerText = ""
+                //updating an element doesnt change the count of activities
+
+
+
 
             }  
         </script>
