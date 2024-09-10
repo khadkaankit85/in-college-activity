@@ -120,11 +120,23 @@
                 }
 
 
+
+
+
                 if (weight < 0 || weight > 100) {
                     ERR.innerText = "Error Message: Weight is rejected"
                     document.getElementById("Weight").value = ""
                     return;
                 }
+
+                const template = new RegExp(/[0-9]/)
+
+                const isNumber = template.test(weight)
+                if (!isNumber) {
+                    ERR.innerText = "Error Message: not a num"
+                    return
+                }
+
 
 
                 noActivity++ //increase the counter
@@ -172,8 +184,9 @@
                 }
 
                 const activityNumberBeingEdited = document.getElementById("activityNo").value - 1
+                <!-- console.log(activityNumberBeingEdited) -->
 
-                if (!activityNumberBeingEdited) {
+                if (activityNumberBeingEdited < 0) {
                     ERR.innerText = "Error Message:Invalid activity number:)"
                     return
                 }
