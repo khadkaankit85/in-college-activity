@@ -33,23 +33,24 @@
 
     <script>
         const baseUrl = "https://in-college-activity.onrender.com/"
+        const projects = [
+            { name: 'Jokes with Joke Api', url: 'jokeApiWebsite.html' },
+            { name: 'DOM Manipulation with Input Validation', url: 'addAndDeleteRows.html' },
+            { name: 'DOM Manipulation ', url: 'addAndDeleteRows.html' },
+            { name: 'Processing User Input ', url: 'addProduct.html' },
+            { name: 'Calculator', url: 'calculator.html' },
+            { name: 'Advanced DOM manipulation with Data Validation', url: 'modifyTable.html' },
+        ];
         document.addEventListener('DOMContentLoaded', () => {
 
-            const projects = [
-                { name: 'Jokes with Joke Api', url: 'jokeApiWebsite.html' },
-                { name: 'DOM Manipulation with Input Validation', url: 'addAndDeleteRows.html' },
-                { name: 'DOM Manipulation ', url: 'addAndDeleteRows.html' },
-                { name: 'Processing User Input ', url: 'addProduct.html' },
-                { name: 'Calculator', url: 'calculator.html' },
-                { name: 'Advanced DOM manipulation with Data Validation', url: 'modifyTable.html' },
-            ];
+
 
             const projectList = document.getElementById('project-list');
 
             projects.forEach(project => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('bg-white', 'p-4', 'rounded', 'shadow');
-                listItem.innerHTML = `<a href="${baseUrl + projects.url}" class="text-blue-500 hover:underline" target="_blank">${project.name}</a>`;
+                listItem.innerHTML = `<a href=${`${baseUrl}${project.url}`} class="text-blue-500 hover:underline" target="_blank">${project.name}</a>`;
                 projectList.appendChild(listItem);
             });
         });
