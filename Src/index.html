@@ -119,10 +119,6 @@
                     return;
                 }
 
-
-
-
-
                 if (weight < 0 || weight > 100) {
                     ERR.innerText = "Error Message: Weight is rejected"
                     document.getElementById("Weight").value = ""
@@ -134,7 +130,7 @@
                 const isNumber = template.test(weight)
                 if (!isNumber) {
                     ERR.innerText = "Error Message: not a num"
-                    return
+                    return;
                 }
 
 
@@ -190,7 +186,6 @@
                     ERR.innerText = "Error Message:Invalid activity number:)"
                     return
                 }
-                console.log(typeof (grade))
                 if (!grade || grade < 0 || grade > 100) {
                     ERR.innerText = "Error Message:Invalid grade:)"
                     return
