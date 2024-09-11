@@ -42,7 +42,7 @@
 
 <body>
     <div class="relative top-0 w-full h-14  flex items-center  " style="background-color: #151157; color:white">
-        <h1 class="text-2xl ml-4 ">Joke of the day</h1>
+        <h1 class="text-2xl ml-4 " id="headerText">Joke of the day</h1>
         <main class="p-6">
 
 
@@ -72,6 +72,8 @@
     const baseEndpointForJoke = ""
     const imageTagId = document.getElementById("imageTagId")
 
+    const headerText = document.getElementById("headerText")
+
     //to get random joke at the starting
     getJokeWithCategory("science").then((joke) => {
         jokeTag.innerText = joke.value
@@ -84,11 +86,20 @@
             const button = document.createElement("button")
             button.classList.add("fetchDataButton")
             button.innerText = buttonText
+
+
+
+
             buttonDiv.appendChild(button)
             button.addEventListener("click", async (e) => {
                 const jokeData = await getJokeWithCategory(e.target.innerText)
                 console.log(jokeData)
                 jokeTag.innerText = jokeData.value
+                headerText.innerHTML = buttonText.split(' ')
+                    .map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    )
+                    .join(' ') + " Joke";
 
             })
         })
