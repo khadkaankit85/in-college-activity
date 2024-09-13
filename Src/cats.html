@@ -70,7 +70,7 @@
             getCatData().then(data => {
                 if (!data) return;
                 if (friendliness == 4) {
-                    data = data.filter(cat => cat.dog_friendly == 4);
+                    data = data.filter(cat => cat.child_friendly == 4);
                 }
                 const totalIntelligence = data.reduce((acc, cat) => acc + Number(cat.intelligence), 0);
                 const avgIntelligence = data.length ? totalIntelligence / data.length : 0;
