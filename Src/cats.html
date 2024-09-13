@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsing Data</title>
+    <style>
+        #content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const apiUrl = "https://api.thecatapi.com/v1/breeds";
+
+        async function getCatData() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.json();
+            } catch (err) {
+                console.error("Error occurred:", err);
+                document.getElementById("content").innerHTML = `<p>Error fetching data: ${err.message}</p>`;
+            }
+        }
+
+        function loadCatName() {
+            getCatData().then(data => {
+                if (!data) return;
+                const contentDiv = document.getElementById("content");
+                let list = data.map(cat => `<li>${cat.name}</li>`).join('');
+                contentDiv.innerHTML = `<ul>${list}</ul>`;
+            });
+        }
+
+        function getCatDataByWeight() {
+            const unit = document.getElementById("metricRadio").checked ? "metric" : "imperial";
+            getCatData().then(data => {
+                if (!data) return;
+                let listofData = data.map(cat => `<li>${cat.weight[unit]} ${unit}</li>`).join('');
+                document.getElementById("content").innerHTML = `<ul>${listofData}</ul>`;
+            });
+        }
+
+        function getByHealthIssue() {
+            const userInput = document.getElementById("health-issues-input").value;
+            if (!userInput) return;
+
+            getCatData().then(data => {
+                if (!data) return;
+                const filteredCats = data.filter(cat => cat.health_issues === userInput);
+                const listofData = filteredCats.map(cat => `<li>${cat.name}</li>`).join('');
+                document.getElementById("content").innerHTML = `<ul>${listofData}</ul><br/><span>Total count: ${filteredCats.length}</span>`;
+            });
+        }
+
+        function getByFriendliness() {
+            getCatData().then(data => {
+                if (!data) return;
+                const listofData = data.map(cat => `<li>${cat.intelligence} ${cat.dog_friendly}</li>`).join('');
+                document.getElementById("content").innerHTML = `<ul>${listofData}</ul><br/><h4>Total count: ${data.length}</h4>`;
+            });
+        }
+
+        function getAverageIntelligence(friendliness) {
+            getCatData().then(data => {
+                if (!data) return;
+                if (friendliness === 4) {
+                    data = data.filter(cat => cat.dog_friendly === 4);
+                }
+                const totalIntelligence = data.reduce((acc, cat) => acc + Number(cat.intelligence), 0);
+                const avgIntelligence = data.length ? totalIntelligence / data.length : 0;
+                document.getElementById("content").innerHTML = `<p>Average Intelligence: ${avgIntelligence}</p>`;
+            });
+        }
+    </script>
+
+    <button onclick="loadCatName()">Load Cat Names</button>
+    <div style="margin: 10px 0;">
+        <button onclick="getByHealthIssue()">Health Issues</button>
+        <input type="text" id="health-issues-input" placeholder="Enter health issue">
+    </div>
+    <div>
+        <input type="radio" id="imperialRadio" name="weightInput" value="imperial" checked>
+        <label for="imperialRadio">Imperial</label>
+        <input type="radio" id="metricRadio" name="weightInput" value="metric">
+        <label for="metricRadio">Metric</label>
+        <button onclick="getCatDataByWeight()">Weight</button>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 5px; height: 80px; flex-direction: column; margin: 5px 0;">
+        <button onclick="getByFriendliness()">Intelligence-Friendly</button>
+        <button onclick="getAverageIntelligence(null)">Average Intelligence</button>
+        <button onclick="getAverageIntelligence(4)">Average Intelligence for Child Friendly = 4</button>
+    </div>
+
+    <div id="content"></div>
+</body>
+
+</html>
