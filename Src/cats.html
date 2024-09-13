@@ -52,7 +52,7 @@
 
             getCatData().then(data => {
                 if (!data) return;
-                const filteredCats = data.filter(cat => cat.health_issues === userInput);
+                const filteredCats = data.filter(cat => cat.health_issues == userInput);
                 const listofData = filteredCats.map(cat => `<li>${cat.name}</li>`).join('');
                 document.getElementById("content").innerHTML = `<ul>${listofData}</ul><br/><span>Total count: ${filteredCats.length}</span>`;
             });
@@ -61,7 +61,7 @@
         function getByFriendliness() {
             getCatData().then(data => {
                 if (!data) return;
-                const listofData = data.map(cat => `<li>${cat.intelligence} ${cat.dog_friendly}</li>`).join('');
+                const listofData = `<li style="font-size:20px">I- F</li>` + data.map(cat => `<li>${cat.intelligence} ${cat.dog_friendly}</li>`).join('');
                 document.getElementById("content").innerHTML = `<ul>${listofData}</ul><br/><h4>Total count: ${data.length}</h4>`;
             });
         }
@@ -69,8 +69,8 @@
         function getAverageIntelligence(friendliness) {
             getCatData().then(data => {
                 if (!data) return;
-                if (friendliness === 4) {
-                    data = data.filter(cat => cat.dog_friendly === 4);
+                if (friendliness == 4) {
+                    data = data.filter(cat => cat.dog_friendly == 4);
                 }
                 const totalIntelligence = data.reduce((acc, cat) => acc + Number(cat.intelligence), 0);
                 const avgIntelligence = data.length ? totalIntelligence / data.length : 0;
