@@ -38,7 +38,8 @@
       onmouseout="checkIfEmpty(this,'Name')">
 
     <label for="phone">Phone Number</label>
-    <input type="text" id="phone" size="22" onmouseout="checkPhoneLength(this.value)"><br>
+    <input type="text" id="phone" size="22" oninput="checkIfPhoneStartsWithChar(this.value)"
+      onmouseout="checkPhoneLength(this.value)"><br>
   </div>
   <br>
   <div align="margin-left">
@@ -107,6 +108,21 @@
       if (phoneNo.length != 6) {
         modifyError("Phone number must be of length 6", document.getElementById("phone"))
       }
+    }
+
+    const checkIfPhoneStartsWithChar = (value) => {
+      const firstCharacterOfInput = value.split("")[0]
+
+      if (!isNaN(parseInt(firstCharacterOfInput))) {
+        modifyError("", document.getElementById("phone"))
+
+      }
+      else {
+        modifyError("Phone number must start with a number", document.getElementById("phone"))
+
+      }
+
+
     }
 
     function submit() {
