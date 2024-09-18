@@ -105,8 +105,14 @@
     }
 
     const checkPhoneLength = (phoneNo) => {
+
       if (phoneNo.length != 6) {
-        modifyError("Phone number must be of length 6", document.getElementById("phone"))
+        if (phoneNo.length == 0) {
+          modifyError("Phone number cannot be empty", document.getElementById("phone"))
+        }
+        else {
+          modifyError("Phone number must be of length 6", document.getElementById("phone"))
+        }
       }
     }
 
