@@ -39,7 +39,7 @@
 
     <label for="phone">Phone Number</label>
     <input type="text" id="phone" size="22" oninput="checkIfPhoneStartsWithChar(this.value)"
-      onmouseout="checkPhoneLength(this.value)"><br>
+      onmouseout="checkPhoneLength(this.value)" data-id="phone"><br>
   </div>
   <br>
   <div align="margin-left">
@@ -63,7 +63,7 @@
     <input type="checkbox" id="drinks" name="gonnaHave" value="drinks">
     <label for="drinks">Drinks</label><br>
   </div>
-  <button onclick="submit()" id="submit">
+  <button onclick="submit()" id="submit" disabled>
     Submit</button>
   <p id="error-message"></p>
 
@@ -73,17 +73,17 @@
     const submitButton = document.getElementById("submit")
     //regex for name
     const fullNameRegex = new RegExp(/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/)
-    let errors = [true, true] //first one for name and second for phone
-    const hasErrors = () => {
-      return errors.some(val => val == true)
-    }
+
+    let nameIsValid = false //they are global and changing them in many places can be troublesome:(
+    let phoneIsValid = false
+
+
 
     //function to show error
     const modifyError = (msg, field) => {
       errorP.innerText = msg
       if (msg == "") {
         field.style.backgroundColor = "white"
-
       }
       else {
         field.style.backgroundColor = "red"
@@ -94,21 +94,41 @@
     const handleNameChange = (name) => {
       if (!fullNameRegex.test(name)) {
         modifyError("Valid First and last name are required ", document.getElementById("name"))
+        nameIsValid = false
       }
       else {
         modifyError("", document.getElementById("name"))
+        nameIsValid = true
       }
+      checkForSubmitBtn()
     }
 
     const checkIfEmpty = (e, fieldName) => {
       if (e.value.length == 0) {
         modifyError(`${fieldName} is empty`, e)
+
       }
+      checkForSubmitBtn()
+
+    }
+
+    const checkForSubmitBtn = () => {
+      if (nameIsValid && phoneIsValid) {
+        document.getElementById("submit").disabled = false
+
+      }
+      else {
+        document.getElementById("submit").disabled = true
+      }
+
+
     }
 
     const checkPhoneLength = (phoneNo) => {
 
       if (phoneNo.length != 6) {
+        phoneIsValid = false
+
         if (phoneNo.length == 0) {
           modifyError("Phone number cannot be empty", document.getElementById("phone"))
         }
@@ -116,6 +136,10 @@
           modifyError("Phone number must be of length 6", document.getElementById("phone"))
         }
       }
+      else {
+        phoneIsValid = true
+      }
+      checkForSubmitBtn()
     }
 
     const checkIfPhoneStartsWithChar = (value) => {
@@ -123,9 +147,17 @@
 
       if (!isNaN(parseInt(firstCharacterOfInput))) {
         modifyError("", document.getElementById("phone"))
+        if (value.length == 6) {
+          phoneIsValid = true
+        }
+        else {
+          phoneIsValid = false
+        }
+        checkForSubmitBtn()
 
       }
       else {
+        phoneIsValid = false
         modifyError("Phone number must start with a number", document.getElementById("phone"))
 
       }
@@ -134,7 +166,7 @@
     }
 
     function submit() {
-
+      checkForSubmitBtn()
       let timeOfBooking = ""
       document.getElementsByName("Seating").forEach((currentRadio) => {
         if (currentRadio.checked) {
