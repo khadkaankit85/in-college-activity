@@ -44,26 +44,26 @@
   <br>
   <div align="margin-left">
     <h2>Select a time</h2>
-    <input type="radio" id="first" name="firstSeating" value="5" checked>
+    <input type="radio" id="first" name="Seating" value="05:00" checked>
     <label for="first">5:00</label><br>
-    <input type="radio" id="second" name="secondSeating" value="6">
+    <input type="radio" id="second" name="Seating" value="06:00">
     <label for="second">6:00</label><br>
-    <input type="radio" id="third" name="thirdSeating" value="7">
+    <input type="radio" id="third" name="Seating" value="07:00">
     <label for="third">7:00</label><br>
-    <input type="radio" id="fourth" name="fourthSeating" value="8">
+    <input type="radio" id="fourth" name="Seating" value="08:00">
     <label for="fourth">8:00</label><br>
     <br>
     <h2>What would you like to have with us?</h2>
-    <input type="checkbox" id="starters" name="starters" value="starters">
+    <input type="checkbox" id="starters" name="gonnaHave" value="starters">
     <label for="starters">Starters</label><br>
-    <input type="checkbox" id="Main" name="Main" value="main">
+    <input type="checkbox" id="Main" name="gonnaHave" value="main">
     <label for="Main">Main Course</label><br>
-    <input type="checkbox" id="dessert" name="dessert" value="dessert">
+    <input type="checkbox" id="dessert" name="gonnaHave" value="dessert">
     <label for="dessert">dessert</label><br>
-    <input type="checkbox" id="drinks" name="drinks" value="drinks">
+    <input type="checkbox" id="drinks" name="gonnaHave" value="drinks">
     <label for="drinks">Drinks</label><br>
   </div>
-  <button onclick="submit()" id="submit" disabled>
+  <button onclick="submit()" id="submit">
     Submit</button>
   <p id="error-message"></p>
 
@@ -73,8 +73,10 @@
     const submitButton = document.getElementById("submit")
     //regex for name
     const fullNameRegex = new RegExp(/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/)
-    let showSubmitbutton = false
-
+    let errors = [true, true] //first one for name and second for phone
+    const hasErrors = () => {
+      return errors.some(val => val == true)
+    }
 
     //function to show error
     const modifyError = (msg, field) => {
@@ -82,10 +84,10 @@
       if (msg == "") {
         field.style.backgroundColor = "white"
 
-
       }
       else {
         field.style.backgroundColor = "red"
+
 
       }
     }
@@ -132,7 +134,24 @@
     }
 
     function submit() {
-      window.alert("submit");
+
+      let timeOfBooking = ""
+      document.getElementsByName("Seating").forEach((currentRadio) => {
+        if (currentRadio.checked) {
+          timeOfBooking = currentRadio.value
+        }
+      })
+
+
+      const checkedGonnaHave = []
+      const gonnaHave = document.getElementsByName("gonnaHave").forEach((currentCheckbox) => {
+        if (currentCheckbox.checked) {
+          checkedGonnaHave.push(currentCheckbox.value)
+        }
+      })
+      const selectedStarters = checkedGonnaHave.join(", ")
+
+      errorP.innerText = `Reservation for: ${document.getElementById("name").value} Phone:${document.getElementById("phone").value} at ${timeOfBooking} Starters are: ${selectedStarters} `
     }
 
   </script>
