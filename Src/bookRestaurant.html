@@ -38,7 +38,7 @@
       onmouseout="checkIfEmpty(this,'Name')">
 
     <label for="phone">Phone Number</label>
-    <input type="number" id="phone" size="22" onmouseout="checkIfEmpty(this,'Phone number')"><br>
+    <input type="text" id="phone" size="22" onmouseout="checkPhoneLength(this.value)"><br>
   </div>
   <br>
   <div align="margin-left">
@@ -80,7 +80,6 @@
       errorP.innerText = msg
       if (msg == "") {
         field.style.backgroundColor = "white"
-        submitButton.disabled = false
 
 
       }
@@ -101,6 +100,12 @@
     const checkIfEmpty = (e, fieldName) => {
       if (e.value.length == 0) {
         modifyError(`${fieldName} is empty`, e)
+      }
+    }
+
+    const checkPhoneLength = (phoneNo) => {
+      if (phoneNo.length != 6) {
+        modifyError("Phone number must be of length 6", document.getElementById("phone"))
       }
     }
 
