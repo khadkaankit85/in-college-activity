@@ -34,10 +34,11 @@
 
 
     <label for="name">Name:</label>
-    <input type="text" id="name" size="22" oninput="handleNameChange(this.value)" onmouseout="checkIfEmpty(this.value)">
+    <input type="text" id="name" size="22" oninput="handleNameChange(this.value)"
+      onmouseout="checkIfEmpty(this,'Name')">
 
     <label for="phone">Phone Number</label>
-    <input type="number" id="phone" size="22"><br>
+    <input type="number" id="phone" size="22" onmouseout="checkIfEmpty(this,'Phone number')"><br>
   </div>
   <br>
   <div align="margin-left">
@@ -61,40 +62,45 @@
     <input type="checkbox" id="drinks" name="drinks" value="drinks">
     <label for="drinks">Drinks</label><br>
   </div>
-  <button onclick="submit()" id="submit">
+  <button onclick="submit()" id="submit" disabled>
     Submit</button>
   <p id="error-message"></p>
 
   <script>
     const errorP = document.getElementById("error-message")
     const userNameInputField = document.getElementById("name")
+    const submitButton = document.getElementById("submit")
     //regex for name
     const fullNameRegex = new RegExp(/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/)
+    let showSubmitbutton = false
+
 
     //function to show error
-    const modifyError = (msg) => {
+    const modifyError = (msg, field) => {
       errorP.innerText = msg
       if (msg == "") {
-        userNameInputField.style.backgroundColor = "white"
+        field.style.backgroundColor = "white"
+        submitButton.disabled = false
+
 
       }
       else {
-        userNameInputField.style.backgroundColor = "red"
+        field.style.backgroundColor = "red"
 
       }
     }
     const handleNameChange = (name) => {
       if (!fullNameRegex.test(name)) {
-        modifyError("Valid First and last name are required ")
+        modifyError("Valid First and last name are required ", document.getElementById("name"))
       }
       else {
-        modifyError("")
+        modifyError("", document.getElementById("name"))
       }
     }
 
-    const checkIfEmpty = (value) => {
-      if (value.length == 0) {
-        modifyError("Name is empty")
+    const checkIfEmpty = (e, fieldName) => {
+      if (e.value.length == 0) {
+        modifyError(`${fieldName} is empty`, e)
       }
     }
 
