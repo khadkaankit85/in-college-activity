@@ -30,6 +30,7 @@
 
         function loadCatName() {
             getCatData().then(data => {
+
                 if (!data) return;
                 const contentDiv = document.getElementById("content");
                 let list = data.map(cat => `<li>${cat.name}</li>`).join('');
@@ -52,6 +53,7 @@
 
             getCatData().then(data => {
                 if (!data) return;
+                console.log(data)
                 const filteredCats = data.filter(cat => cat.health_issues == userInput);
                 const listofData = filteredCats.map(cat => `<li>${cat.name}</li>`).join('');
                 document.getElementById("content").innerHTML = `<ul>${listofData}</ul><br/><span>Total count: ${filteredCats.length}</span>`;
